@@ -11,7 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiRouteRouteImport } from './routes/api/route'
+import { Route as ApiEpgDotxmlRouteImport } from './routes/api/epg[.]xml'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as ApiLineupDotjsonRouteImport } from './routes/api/lineup[.]json'
+import { Route as ApiLineupDotm3uRouteImport } from './routes/api/lineup[.]m3u'
+import { Route as ApiProvidersRouteImport } from './routes/api/providers'
+import { Route as ProvidersIdRouteImport } from './routes/providers.$id'
+import { Route as ApiProvidersIdRouteImport } from './routes/api/providers.$id'
+import { Route as ApiProvidersIdChannelsRouteImport } from './routes/api/providers.$id.channels'
+import { Route as ApiProvidersIdRefreshRouteImport } from './routes/api/providers.$id.refresh'
+import { Route as ApiProvidersIdChannelsStreamIdRouteImport } from './routes/api/providers.$id.channels.$streamId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,39 +32,150 @@ const ApiRouteRoute = ApiRouteRouteImport.update({
   path: '/api',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiEpgDotxmlRoute = ApiEpgDotxmlRouteImport.update({
+  id: '/epg.xml',
+  path: '/epg.xml',
+  getParentRoute: () => ApiRouteRoute,
+} as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
   id: '/health',
   path: '/health',
   getParentRoute: () => ApiRouteRoute,
 } as any)
+const ApiLineupDotjsonRoute = ApiLineupDotjsonRouteImport.update({
+  id: '/lineup.json',
+  path: '/lineup.json',
+  getParentRoute: () => ApiRouteRoute,
+} as any)
+const ApiLineupDotm3uRoute = ApiLineupDotm3uRouteImport.update({
+  id: '/lineup.m3u',
+  path: '/lineup.m3u',
+  getParentRoute: () => ApiRouteRoute,
+} as any)
+const ApiProvidersRoute = ApiProvidersRouteImport.update({
+  id: '/providers',
+  path: '/providers',
+  getParentRoute: () => ApiRouteRoute,
+} as any)
+const ProvidersIdRoute = ProvidersIdRouteImport.update({
+  id: '/providers/$id',
+  path: '/providers/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiProvidersIdRoute = ApiProvidersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiProvidersRoute,
+} as any)
+const ApiProvidersIdChannelsRoute = ApiProvidersIdChannelsRouteImport.update({
+  id: '/channels',
+  path: '/channels',
+  getParentRoute: () => ApiProvidersIdRoute,
+} as any)
+const ApiProvidersIdRefreshRoute = ApiProvidersIdRefreshRouteImport.update({
+  id: '/refresh',
+  path: '/refresh',
+  getParentRoute: () => ApiProvidersIdRoute,
+} as any)
+const ApiProvidersIdChannelsStreamIdRoute =
+  ApiProvidersIdChannelsStreamIdRouteImport.update({
+    id: '/$streamId',
+    path: '/$streamId',
+    getParentRoute: () => ApiProvidersIdChannelsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api': typeof ApiRouteRouteWithChildren
+  '/api/epg.xml': typeof ApiEpgDotxmlRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/lineup.json': typeof ApiLineupDotjsonRoute
+  '/api/lineup.m3u': typeof ApiLineupDotm3uRoute
+  '/api/providers': typeof ApiProvidersRouteWithChildren
+  '/providers/$id': typeof ProvidersIdRoute
+  '/api/providers/$id': typeof ApiProvidersIdRouteWithChildren
+  '/api/providers/$id/channels': typeof ApiProvidersIdChannelsRouteWithChildren
+  '/api/providers/$id/refresh': typeof ApiProvidersIdRefreshRoute
+  '/api/providers/$id/channels/$streamId': typeof ApiProvidersIdChannelsStreamIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api': typeof ApiRouteRouteWithChildren
+  '/api/epg.xml': typeof ApiEpgDotxmlRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/lineup.json': typeof ApiLineupDotjsonRoute
+  '/api/lineup.m3u': typeof ApiLineupDotm3uRoute
+  '/api/providers': typeof ApiProvidersRouteWithChildren
+  '/providers/$id': typeof ProvidersIdRoute
+  '/api/providers/$id': typeof ApiProvidersIdRouteWithChildren
+  '/api/providers/$id/channels': typeof ApiProvidersIdChannelsRouteWithChildren
+  '/api/providers/$id/refresh': typeof ApiProvidersIdRefreshRoute
+  '/api/providers/$id/channels/$streamId': typeof ApiProvidersIdChannelsStreamIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api': typeof ApiRouteRouteWithChildren
+  '/api/epg.xml': typeof ApiEpgDotxmlRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/lineup.json': typeof ApiLineupDotjsonRoute
+  '/api/lineup.m3u': typeof ApiLineupDotm3uRoute
+  '/api/providers': typeof ApiProvidersRouteWithChildren
+  '/providers/$id': typeof ProvidersIdRoute
+  '/api/providers/$id': typeof ApiProvidersIdRouteWithChildren
+  '/api/providers/$id/channels': typeof ApiProvidersIdChannelsRouteWithChildren
+  '/api/providers/$id/refresh': typeof ApiProvidersIdRefreshRoute
+  '/api/providers/$id/channels/$streamId': typeof ApiProvidersIdChannelsStreamIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api' | '/api/health'
+  fullPaths:
+    | '/'
+    | '/api'
+    | '/api/epg.xml'
+    | '/api/health'
+    | '/api/lineup.json'
+    | '/api/lineup.m3u'
+    | '/api/providers'
+    | '/providers/$id'
+    | '/api/providers/$id'
+    | '/api/providers/$id/channels'
+    | '/api/providers/$id/refresh'
+    | '/api/providers/$id/channels/$streamId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api' | '/api/health'
-  id: '__root__' | '/' | '/api' | '/api/health'
+  to:
+    | '/'
+    | '/api'
+    | '/api/epg.xml'
+    | '/api/health'
+    | '/api/lineup.json'
+    | '/api/lineup.m3u'
+    | '/api/providers'
+    | '/providers/$id'
+    | '/api/providers/$id'
+    | '/api/providers/$id/channels'
+    | '/api/providers/$id/refresh'
+    | '/api/providers/$id/channels/$streamId'
+  id:
+    | '__root__'
+    | '/'
+    | '/api'
+    | '/api/epg.xml'
+    | '/api/health'
+    | '/api/lineup.json'
+    | '/api/lineup.m3u'
+    | '/api/providers'
+    | '/providers/$id'
+    | '/api/providers/$id'
+    | '/api/providers/$id/channels'
+    | '/api/providers/$id/refresh'
+    | '/api/providers/$id/channels/$streamId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiRouteRoute: typeof ApiRouteRouteWithChildren
+  ProvidersIdRoute: typeof ProvidersIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -74,6 +194,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/epg.xml': {
+      id: '/api/epg.xml'
+      path: '/epg.xml'
+      fullPath: '/api/epg.xml'
+      preLoaderRoute: typeof ApiEpgDotxmlRouteImport
+      parentRoute: typeof ApiRouteRoute
+    }
     '/api/health': {
       id: '/api/health'
       path: '/health'
@@ -81,15 +208,119 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiHealthRouteImport
       parentRoute: typeof ApiRouteRoute
     }
+    '/api/lineup.json': {
+      id: '/api/lineup.json'
+      path: '/lineup.json'
+      fullPath: '/api/lineup.json'
+      preLoaderRoute: typeof ApiLineupDotjsonRouteImport
+      parentRoute: typeof ApiRouteRoute
+    }
+    '/api/lineup.m3u': {
+      id: '/api/lineup.m3u'
+      path: '/lineup.m3u'
+      fullPath: '/api/lineup.m3u'
+      preLoaderRoute: typeof ApiLineupDotm3uRouteImport
+      parentRoute: typeof ApiRouteRoute
+    }
+    '/api/providers': {
+      id: '/api/providers'
+      path: '/providers'
+      fullPath: '/api/providers'
+      preLoaderRoute: typeof ApiProvidersRouteImport
+      parentRoute: typeof ApiRouteRoute
+    }
+    '/providers/$id': {
+      id: '/providers/$id'
+      path: '/providers/$id'
+      fullPath: '/providers/$id'
+      preLoaderRoute: typeof ProvidersIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/providers/$id': {
+      id: '/api/providers/$id'
+      path: '/$id'
+      fullPath: '/api/providers/$id'
+      preLoaderRoute: typeof ApiProvidersIdRouteImport
+      parentRoute: typeof ApiProvidersRoute
+    }
+    '/api/providers/$id/channels': {
+      id: '/api/providers/$id/channels'
+      path: '/channels'
+      fullPath: '/api/providers/$id/channels'
+      preLoaderRoute: typeof ApiProvidersIdChannelsRouteImport
+      parentRoute: typeof ApiProvidersIdRoute
+    }
+    '/api/providers/$id/refresh': {
+      id: '/api/providers/$id/refresh'
+      path: '/refresh'
+      fullPath: '/api/providers/$id/refresh'
+      preLoaderRoute: typeof ApiProvidersIdRefreshRouteImport
+      parentRoute: typeof ApiProvidersIdRoute
+    }
+    '/api/providers/$id/channels/$streamId': {
+      id: '/api/providers/$id/channels/$streamId'
+      path: '/$streamId'
+      fullPath: '/api/providers/$id/channels/$streamId'
+      preLoaderRoute: typeof ApiProvidersIdChannelsStreamIdRouteImport
+      parentRoute: typeof ApiProvidersIdChannelsRoute
+    }
   }
 }
 
+interface ApiProvidersIdChannelsRouteChildren {
+  ApiProvidersIdChannelsStreamIdRoute: typeof ApiProvidersIdChannelsStreamIdRoute
+}
+
+const ApiProvidersIdChannelsRouteChildren: ApiProvidersIdChannelsRouteChildren =
+  {
+    ApiProvidersIdChannelsStreamIdRoute: ApiProvidersIdChannelsStreamIdRoute,
+  }
+
+const ApiProvidersIdChannelsRouteWithChildren =
+  ApiProvidersIdChannelsRoute._addFileChildren(
+    ApiProvidersIdChannelsRouteChildren,
+  )
+
+interface ApiProvidersIdRouteChildren {
+  ApiProvidersIdChannelsRoute: typeof ApiProvidersIdChannelsRouteWithChildren
+  ApiProvidersIdRefreshRoute: typeof ApiProvidersIdRefreshRoute
+}
+
+const ApiProvidersIdRouteChildren: ApiProvidersIdRouteChildren = {
+  ApiProvidersIdChannelsRoute: ApiProvidersIdChannelsRouteWithChildren,
+  ApiProvidersIdRefreshRoute: ApiProvidersIdRefreshRoute,
+}
+
+const ApiProvidersIdRouteWithChildren = ApiProvidersIdRoute._addFileChildren(
+  ApiProvidersIdRouteChildren,
+)
+
+interface ApiProvidersRouteChildren {
+  ApiProvidersIdRoute: typeof ApiProvidersIdRouteWithChildren
+}
+
+const ApiProvidersRouteChildren: ApiProvidersRouteChildren = {
+  ApiProvidersIdRoute: ApiProvidersIdRouteWithChildren,
+}
+
+const ApiProvidersRouteWithChildren = ApiProvidersRoute._addFileChildren(
+  ApiProvidersRouteChildren,
+)
+
 interface ApiRouteRouteChildren {
+  ApiEpgDotxmlRoute: typeof ApiEpgDotxmlRoute
   ApiHealthRoute: typeof ApiHealthRoute
+  ApiLineupDotjsonRoute: typeof ApiLineupDotjsonRoute
+  ApiLineupDotm3uRoute: typeof ApiLineupDotm3uRoute
+  ApiProvidersRoute: typeof ApiProvidersRouteWithChildren
 }
 
 const ApiRouteRouteChildren: ApiRouteRouteChildren = {
+  ApiEpgDotxmlRoute: ApiEpgDotxmlRoute,
   ApiHealthRoute: ApiHealthRoute,
+  ApiLineupDotjsonRoute: ApiLineupDotjsonRoute,
+  ApiLineupDotm3uRoute: ApiLineupDotm3uRoute,
+  ApiProvidersRoute: ApiProvidersRouteWithChildren,
 }
 
 const ApiRouteRouteWithChildren = ApiRouteRoute._addFileChildren(
@@ -99,6 +330,7 @@ const ApiRouteRouteWithChildren = ApiRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiRouteRoute: ApiRouteRouteWithChildren,
+  ProvidersIdRoute: ProvidersIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
